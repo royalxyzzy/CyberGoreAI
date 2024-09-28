@@ -1,0 +1,58 @@
+import requests
+import random
+import string
+
+
+def generate_random_email():
+    # Generate a random email address for subscriptions
+    characters = string.ascii_letters + string.digits
+    email = ''.join(random.choice(characters) for _ in range(10))
+    email += '@example.com'
+    return email
+
+
+def create_subscriptions(platform, num_subscriptions, your_username):
+    # Create fake subscriptions on the specified social media platform for your profile
+    subscription_url = f'https://api.{platform}.com/subscribe'
+    for i in range(num_subscriptions):
+        email = generate_random_email()
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36'
+        }
+        data = {
+            'email': email,
+            'username': your_username,  # Specify your username here
+            'subscribe': True
+        }
+        response = requests.post(subscription_url, headers=headers, data=data)
+        print(f"Subscription {i+1} created for {your_username}")
+
+
+def generate_views(platform, num_views, your_post_url):
+    # Generate fake views on your specified social media post
+    view_url = f'https://api.{platform}.com/view/{your_post_url}'
+    for i in range(num_views):
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        response = requests.get(view_url, headers=headers)
+        print(f"View {i+1} generated for {your_post_url}")
+
+
+def main():
+    social_platforms = ['instagram', 'tiktok',
+                        'youtube']  # Add your desired platforms
+    your_social_username = 'royalxyzzycgb'  # Replace with your actual username
+    # Replace with your post URL
+    your_post_url = 'https://www.instagram.com/p/C_55BEGvUra/'
+
+    num_subs = 1500
+    num_views = 7000
+
+    for platform in social_platforms:
+        create_subscriptions(platform, num_subs, your_social_username)
+        generate_views(platform, num_views, your_post_url)
+
+
+if __name__ == '__main__':
+    main()
